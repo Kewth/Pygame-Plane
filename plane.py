@@ -22,8 +22,11 @@ def draw_status ():
         screen.blit(heart, rect)
 
     if super_fire_c > 0:
-        pygame.draw.rect(screen, (0, 255, 0), (start + 10, 3, super_fire_c * 3, 20), 0)
-        start += 10 + super_fire_c * 3
+        offset, limit = 10, 100
+        pygame.draw.rect(screen, (0, 255, 0), (start + offset, 3, min(super_fire_c, limit) * 3, 20), 0)
+        if super_fire_c > limit:
+            pygame.draw.rect(screen, (0, 139, 0), (start + offset, 3, min(super_fire_c - limit, limit) * 3, 20), 0)
+        start += 10 + min(super_fire_c, limit) * 3
     # font = pygame.font.Font(None, 25)
     # text = font.render(f'firepower: {fire_freq - c_fire.freq + 1}', True, (0, 0, 0))
     # rect = text.get_rect()
@@ -52,7 +55,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     c_fire = Counter(8)
-    c_newplane = Counter(30)
+    c_newplane = Counter(27)
     super_fire_c = 0
 
     life = LIFE_MAX
@@ -64,6 +67,8 @@ if __name__ == '__main__':
                 sys.exit()
             if event.type == KEYDOWN and event.key == K_q:
                 sys.exit()
+            if event.type == KEYDOWN and event.key == K_j:
+                anti_plane_group.add(Big_plane())
 
         if c_fire.run():
             if super_fire_c > 0:
@@ -101,8 +106,8 @@ if __name__ == '__main__':
                 if pygame.sprite.collide_mask(bullet, anti):
                     bullet.kill()
                     if anti.be_attacked():
-                        if anti.__class__ == Big_plane:
-                            super_fire_c += 25
+                        if anti.__class__ == Big_plane and random.randint(1, 100) <= 60:
+                            super_fire_c += 30
                         anti.kill()
                     break
 
