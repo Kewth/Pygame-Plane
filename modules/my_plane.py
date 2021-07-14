@@ -9,6 +9,7 @@ class My_plane (pygame.sprite.Sprite):
     def __init__ (self):
         pygame.sprite.Sprite.__init__(self)
         self.image = cfg.IMAGE_DICT['my_plane']
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.bottom = cfg.SCREEN_SIZE[1]
         self.rect.centerx = cfg.SCREEN_SIZE[0] / 2
@@ -40,6 +41,7 @@ class Bullet (pygame.sprite.Sprite):
     def __init__ (self, axis):
         pygame.sprite.Sprite.__init__(self)
         self.image = cfg.IMAGE_DICT['bullet']
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = axis
     '''更新位置'''

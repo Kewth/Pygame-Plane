@@ -11,10 +11,7 @@ from cfg import *
 def draw_status ():
     start = 3
     for i in range(LIFE_MAX):
-        if i < life:
-            heart = IMAGE_DICT['heart']
-        else:
-            heart = IMAGE_DICT['cross']
+        heart = IMAGE_DICT['heart'] if i < life else IMAGE_DICT['cross']
         rect = heart.get_rect()
         rect.top = 3
         rect.left = start
@@ -80,10 +77,7 @@ if __name__ == '__main__':
                 new_bullet = Bullet((myplane.rect.centerx, myplane.rect.top))
                 bullet_group.add(new_bullet)
         if c_newplane.run():
-            if random.randint(1, 100) <= 12:
-                new_plane = Big_plane()
-            else:
-                new_plane = Small_plane()
+            new_plane = Big_plane() if random.randint(1, 100) <= 12 else Small_plane()
             anti_plane_group.add(new_plane)
 
         myplane.update(pygame.key.get_pressed())
@@ -101,6 +95,7 @@ if __name__ == '__main__':
         if collision_detection:
             life -= 1
 
+        # TODO: 优化复杂度
         for bullet in bullet_group:
             for anti in anti_plane_group:
                 if pygame.sprite.collide_mask(bullet, anti):

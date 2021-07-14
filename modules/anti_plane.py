@@ -9,6 +9,7 @@ class Small_plane (pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.life = 3
         self.image = cfg.IMAGE_DICT['small_plane'][self.life - 1]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.top = - self.rect.height
         self.rect.centerx = + self.rect.width / 2 + \
@@ -33,6 +34,7 @@ class Big_plane (pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.life = 10
         self.image = cfg.IMAGE_DICT['big_plane'][self.life - 1]
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.top = - self.rect.height
         self.rect.centerx = + self.rect.width / 2 + \
